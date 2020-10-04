@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Art/SuperFlag.png" type="Texture" id=1]
+[ext_resource path="res://Objects/Superflag.gd" type="Script" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 24, 34 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 24, 0, 24, 34 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 48, 0, 24, 34 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10, 85.9015 )
+
+[node name="SuperFlag" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 5, 5 )
+frames = SubResource( 4 )
+frame = 2
+playing = true
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( -50.0031, -0.396843 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( -13.0473, -88.2826, 13.9385, -87.8858, 15.1291, -75.5834, 107.198, -56.1378, 109.976, 58.1551, 9.57318, 50.2181, 9.57318, 85.5378, -12.2536, 86.3315 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+position = Vector2( -50.0031, -0.396843 )
+shape = SubResource( 6 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

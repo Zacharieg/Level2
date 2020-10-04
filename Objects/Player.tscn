@@ -1,0 +1,359 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://Objects/Player.gd" type="Script" id=1]
+[ext_resource path="res://Art/Character.png" type="Texture" id=2]
+[ext_resource path="res://Art/Ligth.png" type="Texture" id=3]
+[ext_resource path="res://Art/Title.png" type="Texture" id=4]
+[ext_resource path="res://Art/NewPowerUp.png" type="Texture" id=5]
+[ext_resource path="res://Objects.tres" type="Animation" id=6]
+[ext_resource path="res://pixelart.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Sound/FootStep2.wav" type="AudioStream" id=8]
+[ext_resource path="res://Sound/Power UP.wav" type="AudioStream" id=9]
+[ext_resource path="res://Sound/Laser.wav" type="AudioStream" id=10]
+[ext_resource path="res://Sound/Die.wav" type="AudioStream" id=11]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 31.2809, 24.8954 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "Stay",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 6 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 8.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=13]
+resource_name = "Normal"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Character:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CollisionPolygon2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "Death"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ), Vector2( 0.5, 0.5 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera2D:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 9.4, 9.4, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camera2D:rotating")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Dead:rect_position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -254.351, -468.526 ), Vector2( -230.806, -184.303 ), Vector2( -227.442, -150.668 ), Vector2( -224.079, 588.934 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Dead:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "Level"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Title:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.5, 1, 2, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -700.95, -183.685 ), Vector2( -109.974, -183.685 ), Vector2( 122.27, -183.685 ), Vector2( 723.454, -183.685 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Title:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "PowerUp"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("NewPowerUp:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1027.71, -208.657 ), Vector2( 0.383423, -140.621 ), Vector2( 38.181, -135.581 ), Vector2( 1187.23, -125.502 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera2D:rotating")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camera2D:rotation_degrees")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 10.0, 10.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Camera2D:zoom")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ), Vector2( 0.5, 0.5 ), Vector2( 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("NewPowerUp:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="DynamicFont" id=14]
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 64
+font_data = ExtResource( 7 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="Character" type="Node2D" parent="."]
+
+[node name="Arms" type="Area2D" parent="Character"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character/Arms"]
+shape = SubResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Character"]
+position = Vector2( 3.45172, -3.50131 )
+scale = Vector2( 4.14809, 4.17938 )
+frames = SubResource( 9 )
+animation = "Jump"
+playing = true
+offset = Vector2( -0.808, 0 )
+
+[node name="Light" type="Light2D" parent="."]
+position = Vector2( 0, -2.62204 )
+texture = ExtResource( 3 )
+texture_scale = 5.0
+energy = 0.66
+shadow_enabled = true
+shadow_filter_smooth = 64.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -50 )
+scale = Vector2( 1.07474, 1.09761 )
+current = true
+
+[node name="PowerUP" type="AnimationPlayer" parent="."]
+anims/Big = ExtResource( 6 )
+anims/Normal = SubResource( 13 )
+
+[node name="UIAnimation" type="AnimationPlayer" parent="."]
+anims/Death = SubResource( 12 )
+anims/Level = SubResource( 17 )
+anims/PowerUp = SubResource( 16 )
+
+[node name="Title" type="Sprite" parent="."]
+visible = false
+position = Vector2( -700.95, -183.685 )
+scale = Vector2( 5.46971, 5.46971 )
+z_index = 10
+texture = ExtResource( 4 )
+
+[node name="NewPowerUp" type="Sprite" parent="."]
+visible = false
+position = Vector2( 1187.23, -125.502 )
+rotation = 0.162243
+scale = Vector2( 4.24411, 4.24411 )
+z_index = 10
+texture = ExtResource( 5 )
+
+[node name="MessagePowerUp" type="Label" parent="NewPowerUp"]
+margin_left = -63.1778
+margin_top = 19.1395
+margin_right = 198.822
+margin_bottom = 46.1395
+rect_rotation = -7.89124
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 14 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Bla bla bla pouki"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanonD" type="Node2D" parent="."]
+position = Vector2( 37.132, -17.014 )
+
+[node name="CanonG" type="Node2D" parent="."]
+position = Vector2( -37.4234, -17.014 )
+
+[node name="Dead" type="Label" parent="."]
+visible = false
+margin_left = -254.351
+margin_top = -468.526
+margin_right = 257.649
+margin_bottom = -412.526
+rect_rotation = 6.09051
+rect_scale = Vector2( 0.901961, 0.798387 )
+custom_fonts/font = SubResource( 15 )
+text = "You are dead"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerUpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = 1.0
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = 1.0
+
+[node name="DieSound" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 11 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -12.4936, -32.9114, -11.792, 25.3163, -6.03943, 30.0868, 5.46581, 30.2271, 10.7975, 26.7194, 10.6572, -33.6129 )
